@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Categorías de Productos</h2>
+<ul>
+    {% for categoria in categorias %}
+        <li><a href="{{ url_for('ver_categoria', categoria_id=categoria.id) }}">{{ categoria.nombre }}</a></li>
+    {% else %}
+        <li>No hay categorías aún.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
