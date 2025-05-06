@@ -55,10 +55,51 @@ def login():
         flash('Credenciales inválidas.')
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('usuario_id', None)
+    flash('Has cerrado sesión.')
+    return redirect(url_for('index'))
+
+@app.route('/agregar_categoria', methods=['GET', 'POST'])
+def agregar_categoria():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        nueva_categoria = Categoria(nombre=nombre)
+        db.session.add(nueva_categoria)
+        db.session.commit()
+        flash('Categoría añadida!')
+        return redirect(url_for('index'))
+    return render_template('agregar_categoria.html')
+
+@app.route('/agregar_producto', methods=['GET', 'POST'])
+def agregar_producto():
+    categorias = Categoria.query.all()
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        descripcion = request.form['descripcion']
+        precio = float(request.form['precio'])
+        categoria_id = int(request.form['categoria_id'])
+        imagen = request.form['imagen']  
+        nuevo_producto = Producto(
+            nombre=nombre,
+            descripcion=descripcion,
+            precio=precio,
+            categoria_id=categoria_id,
+            imagen=imagen
+        )
+        db.session.add(nuevo_producto)
+        db.session.commit()
+        flash('Producto añadido!')
+        return redirect(url_for('index'))
+    return render_template('agregar_producto.html', categorias=categorias)
 
 
-
-
+@app.route('/categoria/<int:categoria_id>')
+def ver_categoria(categoria_id):
+    categoria = Categoria.query.get_or_404(categoria_id)
+    productos = Producto.query.filter_by(categoria_id=categoria.id).all()
+    return render_template('ver_categoria.html', categoria=categoria, productos=productos)
 
 if __name__ == '__main__':
     with app.app_context():
