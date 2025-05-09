@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Productos en {{ categoria.nombre }}</h2>
+<ul>
+    {% for producto in productos %}
+        <li>
+            <strong>{{ producto.nombre }}</strong>: {{ producto.descripcion }}<br>
+            Precio: {{ producto.precio }} €<br>
+            {% if producto.imagen %}
+                <img src="{{ url_for('static', filename=producto.imagen.split('static/')[1]) }}" width="100"><br>
+            {% endif %}
+        </li>
+    {% else %}
+        <li>No hay productos aún.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
