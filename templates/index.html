@@ -1,12 +1,11 @@
-{% extends 'layout.html' %}
-
+{% extends "layout.html" %}
+{% block title %}Inicio{% endblock %}
 {% block content %}
-<h2>Categorías de Productos</h2>
-<ul>
-    {% for categoria in categorias %}
-        <li><a href="{{ url_for('ver_categoria', categoria_id=categoria.id) }}">{{ categoria.nombre }}</a></li>
-    {% else %}
-        <li>No hay categorías aún.</li>
-    {% endfor %}
-</ul>
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; text-align: center;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Bienvenido a Trenor</h1>
+    <p style="font-size: 1.2rem; max-width: 600px;">
+      Tu portal de deportes donde puedes gestionar categorías y productos deportivos.
+    </p>
+  </div>
 {% endblock %}
+

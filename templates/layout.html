@@ -1,31 +1,22 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Trenor - Tienda Deportiva</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trenor - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Tienda Trenor 🏋️‍♂️</h1>
-    <p>
-        <a href="{{ url_for('index') }}">Inicio</a> |
-        {% if session.get('usuario_id') %}
-            <a href="{{ url_for('agregar_categoria') }}">Añadir Categoría</a> |
-            <a href="{{ url_for('agregar_producto') }}">Añadir Producto</a> |
-            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
-        {% else %}
-            <a href="{{ url_for('registro') }}">Registrarse</a> |
-            <a href="{{ url_for('login') }}">Iniciar sesión</a>
-        {% endif %}
-    </p>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+  <header>
+    <div class="logo">Trenor</div>
+    <nav class="nav-links">
+      <a href="{{ url_for('registro') }}">Registrarse</a>
+      <a href="{{ url_for('login') }}">Iniciar sesión</a>
+    </nav>
+  </header>
+
+  <main class="container">
     {% block content %}{% endblock %}
+  </main>
 </body>
 </html>
-
