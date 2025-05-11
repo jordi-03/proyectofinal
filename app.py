@@ -7,7 +7,6 @@ app.config['SECRET_KEY'] = 'jordi1234'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trenor.db'
 db = SQLAlchemy(app)
 
-# Modelos
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True, nullable=False)
@@ -25,13 +24,13 @@ class Producto(db.Model):
     categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'))
     imagen = db.Column(db.String(300))
 
-# Rutas
+
 @app.route('/')
 def index():
     if 'usuario_id' not in session:
-        return render_template('index.html')  # Solo muestra el mensaje de bienvenida
+        return render_template('index.html') 
     else:
-        return render_template('index.html')  # Aquí, se muestran las opciones para agregar categorías y productos
+        return render_template('index.html')  
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -118,8 +117,8 @@ def ver_categoria():
     return render_template('ver_categoria.html', productos=productos)
 
 
-# Inicialización de base de datos y arranque de la app
+
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Crea las tablas de la base de datos
+        db.create_all()  
     app.run(debug=True)

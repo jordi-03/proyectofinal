@@ -10,10 +10,10 @@
         <p>Tu portal de deportes donde puedes gestionar categorías y productos deportivos.</p>
         <p class="info-text">Por favor, inicia sesión para agregar productos y categorías.</p>
       {% else %}
-        <h1>¡Hola, {{ session['usuario_id'] }}!</h1>
+        <h1>Bienvenido a Trenor!</h1>
         <p>Gestiona categorías y productos deportivos en tu portal.</p>
         <div class="center-options">
-          <a href="{{ url_for('agregar_categoria') }}" class="option-btn">Agregar Categoría</a>
+          <a href="{{ url_for('agregar_categoria') }}" class="option-btn">Agregar Categoria</a>
           <a href="{{ url_for('agregar_producto') }}" class="option-btn">Agregar Producto</a>
           <a href="{{ url_for('ver_categoria') }}" class="option-btn">Ver Productos</a>
         </div>

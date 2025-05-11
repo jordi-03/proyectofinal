@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +5,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Colores */
+
 :root {
   --primary: #0d6efd;
   --background: #e9ecef;
@@ -14,14 +13,14 @@
   --white: #fff;
 }
 
-/* Fondo */
+
 body {
   background-color: var(--background);
   color: var(--text);
   height: 100vh;
 }
 
-/* Header */
+
 header {
   display: flex;
   justify-content: space-between;
@@ -56,7 +55,7 @@ header {
   color: white;
 }
 
-/* Contenido central */
+
 .container {
   display: flex;
   justify-content: center;
@@ -65,7 +64,7 @@ header {
   padding: 2rem;
 }
 
-/* Login / Registro container */
+
 .auth-container, .form-container {
   max-width: 400px;
   margin: 0 auto;
@@ -80,7 +79,7 @@ h2 {
   margin-bottom: 1rem;
 }
 
-/* Form elements */
+
 input, select, button {
   width: 100%;
   padding: 0.8rem;
@@ -104,7 +103,7 @@ button:hover {
   background-color: #0b5ed7;
 }
 
-/* Centro de la página con opciones */
+
 .center-options {
   display: flex;
   gap: 2rem;
@@ -126,7 +125,7 @@ button:hover {
   background-color: #0b5ed7;
 }
 
-/* Título productos */
+
 .titulo-productos {
   text-align: center;
   margin-top: 2rem;
@@ -134,7 +133,7 @@ button:hover {
   color: var(--primary);
 }
 
-/* Grid de productos */
+
 .productos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -144,7 +143,7 @@ button:hover {
   margin: 0 auto;
 }
 
-/* Tarjeta individual */
+
 .producto-card {
   background-color: var(--white);
   border-radius: 15px;
@@ -158,7 +157,7 @@ button:hover {
   transform: translateY(-5px);
 }
 
-/* Imagen pequeña y centrada */
+
 .imagen-container {
   width: 100px;
   height: 100px;
@@ -175,7 +174,7 @@ button:hover {
   object-fit: contain;
 }
 
-/* Texto del producto */
+
 .producto-card h3 {
   font-size: 1.1rem;
   margin: 0.5rem 0;
