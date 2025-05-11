@@ -27,10 +27,7 @@ class Producto(db.Model):
 
 @app.route('/')
 def index():
-    if 'usuario_id' not in session:
-        return render_template('index.html') 
-    else:
-        return render_template('index.html')  
+   return render_template('index.html')  
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -41,7 +38,7 @@ def registro():
         nuevo_usuario = Usuario(email=email, contrasena=hash_contrasena)
         db.session.add(nuevo_usuario)
         db.session.commit()
-        flash('¡Registro exitoso, ahora inicia sesión!', 'success')
+        flash('¡Registro exitoso, ahora inicia sesión!')
         return redirect(url_for('login'))
     return render_template('registro.html')
 
@@ -53,9 +50,9 @@ def login():
         usuario = Usuario.query.filter_by(email=email).first()
         if usuario and check_password_hash(usuario.contrasena, contrasena):
             session['usuario_id'] = usuario.id
-            flash('Has iniciado sesión correctamente!', 'success')
+            flash('Has iniciado sesión correctamente!')
             return redirect(url_for('index'))
-        flash('Credenciales inválidas, intenta nuevamente.', 'danger')
+        flash('Credenciales inválidas, intenta nuevamente.')
     return render_template('login.html')
 
 @app.route('/logout')
@@ -67,7 +64,7 @@ def logout():
 @app.route('/agregar_categoria', methods=['GET', 'POST'])
 def agregar_categoria():
     if 'usuario_id' not in session:
-        flash('Debes iniciar sesión para agregar categorías.', 'warning')
+        flash('Debes iniciar sesión para agregar categorías.')
         return redirect(url_for('login'))
     
     if request.method == 'POST':
@@ -75,7 +72,7 @@ def agregar_categoria():
         nueva_categoria = Categoria(nombre=nombre)
         db.session.add(nueva_categoria)
         db.session.commit()
-        flash('Categoría añadida con éxito!', 'success')
+        flash('Categoría añadida con éxito!')
         return redirect(url_for('index'))
     
     return render_template('agregar_categoria.html')
@@ -83,7 +80,7 @@ def agregar_categoria():
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
     if 'usuario_id' not in session:
-        flash('Debes iniciar sesión para agregar productos.', 'warning')
+        flash('Debes iniciar sesión para agregar productos.')
         return redirect(url_for('login'))
 
     categorias = Categoria.query.all()
@@ -102,7 +99,7 @@ def agregar_producto():
         )
         db.session.add(nuevo_producto)
         db.session.commit()
-        flash('Producto añadido con éxito!', 'success')
+        flash('Producto añadido con éxito!')
         return redirect(url_for('index'))
     
     return render_template('agregar_producto.html', categorias=categorias)
@@ -110,12 +107,11 @@ def agregar_producto():
 @app.route('/ver_categoria')
 def ver_categoria():
     if 'usuario_id' not in session:
-        flash('Debes iniciar sesión para ver los productos.', 'danger')
+        flash('Debes iniciar sesión para ver los productos.')
         return redirect(url_for('login'))
     
     productos = Producto.query.all()
     return render_template('ver_categoria.html', productos=productos)
-
 
 
 if __name__ == '__main__':
