@@ -1,18 +1,21 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h2>Productos en {{ categoria.nombre }}</h2>
-<ul>
+<h2 class="titulo-productos">Todos los productos disponibles</h2>
+<div class="productos-grid">
     {% for producto in productos %}
-        <li>
-            <strong>{{ producto.nombre }}</strong>: {{ producto.descripcion }}<br>
-            Precio: {{ producto.precio }} €<br>
-            {% if producto.imagen %}
-                <img src="{{ url_for('static', filename=producto.imagen.split('static/')[1]) }}" width="100"><br>
-            {% endif %}
-        </li>
+        <div class="producto-card">
+            <div class="imagen-container">
+                {% if producto.imagen %}
+                    <img src="{{ url_for('static', filename=producto.imagen.split('static/')[1]) }}" alt="{{ producto.nombre }}">
+                {% endif %}
+            </div>
+            <h3>{{ producto.nombre }}</h3>
+            <p>{{ producto.descripcion }}</p>
+            <p class="precio">{{ producto.precio }} €</p>
+        </div>
     {% else %}
-        <li>No hay productos aún.</li>
+        <p>No hay productos disponibles.</p>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

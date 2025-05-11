@@ -1,11 +1,23 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
+
 {% block title %}Inicio{% endblock %}
+
 {% block content %}
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh; text-align: center;">
-    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Bienvenido a Trenor</h1>
-    <p style="font-size: 1.2rem; max-width: 600px;">
-      Tu portal de deportes donde puedes gestionar categorías y productos deportivos.
-    </p>
+  <div class="container">
+    <div class="welcome-message">
+      {% if 'usuario_id' not in session %}
+        <h1>Bienvenido a Trenor</h1>
+        <p>Tu portal de deportes donde puedes gestionar categorías y productos deportivos.</p>
+        <p class="info-text">Por favor, inicia sesión para agregar productos y categorías.</p>
+      {% else %}
+        <h1>¡Hola, {{ session['usuario_id'] }}!</h1>
+        <p>Gestiona categorías y productos deportivos en tu portal.</p>
+        <div class="center-options">
+          <a href="{{ url_for('agregar_categoria') }}" class="option-btn">Agregar Categoría</a>
+          <a href="{{ url_for('agregar_producto') }}" class="option-btn">Agregar Producto</a>
+          <a href="{{ url_for('ver_categoria') }}" class="option-btn">Ver Productos</a>
+        </div>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}
-

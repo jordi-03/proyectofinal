@@ -7,6 +7,7 @@ app.config['SECRET_KEY'] = 'jordi1234'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trenor.db'
 db = SQLAlchemy(app)
 
+# Modelos
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True, nullable=False)
@@ -24,21 +25,24 @@ class Producto(db.Model):
     categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'))
     imagen = db.Column(db.String(300))
 
+# Rutas
 @app.route('/')
 def index():
-    categorias = Categoria.query.all()
-    return render_template('index.html', categorias=categorias)
+    if 'usuario_id' not in session:
+        return render_template('index.html')  # Solo muestra el mensaje de bienvenida
+    else:
+        return render_template('index.html')  # Aquí, se muestran las opciones para agregar categorías y productos
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     if request.method == 'POST':
         email = request.form['email']
-        contrasena = request.form['contrasena']
+        contrasena = request.form['password']
         hash_contrasena = generate_password_hash(contrasena)
         nuevo_usuario = Usuario(email=email, contrasena=hash_contrasena)
         db.session.add(nuevo_usuario)
         db.session.commit()
-        flash('¡Registro exitoso, ahora inicia sesión!')
+        flash('¡Registro exitoso, ahora inicia sesión!', 'success')
         return redirect(url_for('login'))
     return render_template('registro.html')
 
@@ -46,41 +50,50 @@ def registro():
 def login():
     if request.method == 'POST':
         email = request.form['email']
-        contrasena = request.form['contrasena']
+        contrasena = request.form['password']
         usuario = Usuario.query.filter_by(email=email).first()
         if usuario and check_password_hash(usuario.contrasena, contrasena):
             session['usuario_id'] = usuario.id
-            flash('Has iniciado sesión!')
+            flash('Has iniciado sesión correctamente!', 'success')
             return redirect(url_for('index'))
-        flash('Credenciales inválidas.')
+        flash('Credenciales inválidas, intenta nuevamente.', 'danger')
     return render_template('login.html')
 
 @app.route('/logout')
 def logout():
     session.pop('usuario_id', None)
-    flash('Has cerrado sesión.')
+    flash('Has cerrado sesión correctamente.', 'info')
     return redirect(url_for('index'))
 
 @app.route('/agregar_categoria', methods=['GET', 'POST'])
 def agregar_categoria():
+    if 'usuario_id' not in session:
+        flash('Debes iniciar sesión para agregar categorías.', 'warning')
+        return redirect(url_for('login'))
+    
     if request.method == 'POST':
         nombre = request.form['nombre']
         nueva_categoria = Categoria(nombre=nombre)
         db.session.add(nueva_categoria)
         db.session.commit()
-        flash('Categoría añadida!')
+        flash('Categoría añadida con éxito!', 'success')
         return redirect(url_for('index'))
+    
     return render_template('agregar_categoria.html')
 
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
+    if 'usuario_id' not in session:
+        flash('Debes iniciar sesión para agregar productos.', 'warning')
+        return redirect(url_for('login'))
+
     categorias = Categoria.query.all()
     if request.method == 'POST':
         nombre = request.form['nombre']
         descripcion = request.form['descripcion']
         precio = float(request.form['precio'])
         categoria_id = int(request.form['categoria_id'])
-        imagen = request.form['imagen']  
+        imagen = request.form['imagen']
         nuevo_producto = Producto(
             nombre=nombre,
             descripcion=descripcion,
@@ -90,18 +103,23 @@ def agregar_producto():
         )
         db.session.add(nuevo_producto)
         db.session.commit()
-        flash('Producto añadido!')
+        flash('Producto añadido con éxito!', 'success')
         return redirect(url_for('index'))
+    
     return render_template('agregar_producto.html', categorias=categorias)
 
+@app.route('/ver_categoria')
+def ver_categoria():
+    if 'usuario_id' not in session:
+        flash('Debes iniciar sesión para ver los productos.', 'danger')
+        return redirect(url_for('login'))
+    
+    productos = Producto.query.all()
+    return render_template('ver_categoria.html', productos=productos)
 
-@app.route('/categoria/<int:categoria_id>')
-def ver_categoria(categoria_id):
-    categoria = Categoria.query.get_or_404(categoria_id)
-    productos = Producto.query.filter_by(categoria_id=categoria.id).all()
-    return render_template('ver_categoria.html', categoria=categoria, productos=productos)
 
+# Inicialización de base de datos y arranque de la app
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        db.create_all()  # Crea las tablas de la base de datos
     app.run(debug=True)

@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}Agregar Categoría{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% if 'usuario_id' in session %}
+      <div class="auth-container">
+        <h2>Añadir Categoría</h2>
+        <form method="POST">
+          <input type="text" name="nombre" placeholder="Nombre de la categoría" required>
+          <button type="submit">Guardar</button>
+        </form>
+      </div>
+    {% else %}
+      <p>Debes iniciar sesión para agregar una categoría.</p>
+    {% endif %}
+  </div>
+{% endblock %}

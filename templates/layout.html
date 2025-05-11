@@ -10,8 +10,13 @@
   <header>
     <div class="logo">Trenor</div>
     <nav class="nav-links">
-      <a href="{{ url_for('registro') }}">Registrarse</a>
-      <a href="{{ url_for('login') }}">Iniciar sesión</a>
+      {% if 'usuario_id' in session %}
+        <a href="{{ url_for('index') }}">Inicio</a>
+        <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+      {% else %}
+        <a href="{{ url_for('registro') }}">Registrarse</a>
+        <a href="{{ url_for('login') }}">Iniciar sesión</a>
+      {% endif %}
     </nav>
   </header>
 

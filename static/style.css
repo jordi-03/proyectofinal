@@ -56,18 +56,32 @@ header {
   color: white;
 }
 
+/* Contenido central */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding: 2rem;
+}
+
 /* Login / Registro container */
-.auth-container {
+.auth-container, .form-container {
   max-width: 400px;
-  margin: 5rem auto;
+  margin: 0 auto;
   background-color: var(--white);
   padding: 2rem;
   border-radius: 30px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 /* Form elements */
-input {
+input, select, button {
   width: 100%;
   padding: 0.8rem;
   margin-bottom: 1rem;
@@ -76,7 +90,6 @@ input {
 }
 
 button {
-  width: 100%;
   background-color: var(--primary);
   color: white;
   border: none;
@@ -89,4 +102,91 @@ button {
 
 button:hover {
   background-color: #0b5ed7;
+}
+
+/* Centro de la página con opciones */
+.center-options {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.option-btn {
+  background-color: var(--primary);
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.option-btn:hover {
+  background-color: #0b5ed7;
+}
+
+/* Título productos */
+.titulo-productos {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+/* Grid de productos */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tarjeta individual */
+.producto-card {
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Imagen pequeña y centrada */
+.imagen-container {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagen-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Texto del producto */
+.producto-card h3 {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.producto-card p {
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+}
+
+.precio {
+  font-weight: bold;
+  color: var(--primary);
 }
